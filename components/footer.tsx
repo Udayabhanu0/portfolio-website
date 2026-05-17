@@ -4,7 +4,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: Github, href: '#', label: 'GitHub' },
+    { icon: Github, href: 'https://github.com/Manish10000', label: 'GitHub' },
     { icon: Linkedin, href: '#', label: 'LinkedIn' },
     { icon: Twitter, href: '#', label: 'Twitter' },
     { icon: Mail, href: 'mailto:hello@example.com', label: 'Email' },
@@ -47,6 +47,8 @@ export function Footer() {
                   <a
                     key={link.label}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={link.label}
                     className="text-gray-400 hover:text-cyan-400 transition-colors"
                   >

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { ProfileImage } from './profile-modal'
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,13 +39,17 @@ export function Header() {
       <nav className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         {/* Logo */}
         <motion.div
-          className="flex items-center gap-2"
+          className="flex items-center gap-3"
           whileHover={{ scale: 1.05 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">UA</span>
-          </div>
+          <ProfileImage
+            imageUrl="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Udayabhanu%20aich-9ekLvu1Thze2RDQoHXedcdMLNowa1T.jpg"
+            altText="Udayabhanu Aich"
+            name="Udayabhanu Aich"
+            className="w-10 h-10 rounded-full overflow-hidden"
+            imgClassName="w-full h-full object-cover"
+          />
           <span className="text-white font-bold text-lg hidden sm:inline">Udayabhanu</span>
         </motion.div>
 

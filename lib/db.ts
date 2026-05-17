@@ -17,7 +17,7 @@ function initializeDb() {
 
 // Create a proxy that initializes on first use
 const dbProxy = new Proxy(
-  {},
+  function () {},
   {
     get(target, prop) {
       return initializeDb()[prop]

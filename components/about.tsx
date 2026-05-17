@@ -45,13 +45,7 @@ export function About() {
           {/* Content grid */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Profile Image */}
-            <motion.div variants={itemVariants} className="flex flex-col items-center md:order-2">
-              <ProfileImage
-                imageUrl="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Udayabhanu%20aich-9ekLvu1Thze2RDQoHXedcdMLNowa1T.jpg"
-                altText="Udayabhanu Aich"
-                name="Udayabhanu Aich"
-              />
-            </motion.div>
+       
 
             {/* Text content */}
             <motion.div variants={itemVariants} className="space-y-6 md:order-1">

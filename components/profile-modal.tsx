@@ -8,9 +8,17 @@ interface ProfileModalProps {
   imageUrl: string
   altText: string
   name: string
+  className?: string
+  imgClassName?: string
 }
 
-export function ProfileImage({ imageUrl, altText, name }: ProfileModalProps) {
+export function ProfileImage({
+  imageUrl,
+  altText,
+  name,
+  className,
+  imgClassName,
+}: ProfileModalProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -38,13 +46,13 @@ export function ProfileImage({ imageUrl, altText, name }: ProfileModalProps) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className="relative cursor-pointer w-48 h-48 sm:w-56 sm:h-56 mx-auto mb-8"
+        className={`relative cursor-pointer mx-auto mb-8 ${className ?? 'w-48 h-48 sm:w-56 sm:h-56'}`}
       >
         <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-cyan-400/30 hover:border-cyan-400/60 transition-colors duration-300 glow-cyan-lg">
           <img
             src={imageUrl}
             alt={altText}
-            className="w-full h-full object-cover"
+            className={imgClassName ?? 'w-full h-full object-cover'}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
             <span className="text-cyan-300 text-sm font-medium">Click to enlarge</span>
