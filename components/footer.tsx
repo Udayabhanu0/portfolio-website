@@ -31,8 +31,13 @@ export function Footer() {
           {/* Brand Info */}
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-indigo-600 font-mono text-xs font-bold text-black">
-                UA
+              <div className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#11131b]">
+                <svg width="16" height="16" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M48 54V98C48 122 66 136 90 136C114 136 132 122 132 98V54" stroke="#00F2FE" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M68 112L90 58L112 112" stroke="#FFFFFF" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M76 96H104" stroke="#00F2FE" strokeWidth="14" strokeLinecap="round" />
+                  <circle cx="90" cy="58" r="6" fill="#00F2FE" />
+                </svg>
               </div>
               <p className="text-base font-bold text-white">Udayabhanu Aich</p>
             </div>

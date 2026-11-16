@@ -1,0 +1,27 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="42" fill="#090a0f" />
+  <rect x="1" y="1" width="178" height="178" rx="41" stroke="rgba(255, 255, 255, 0.12)" stroke-width="2" />
+  <defs>
+    <linearGradient id="ua-cyan-grad" x1="48" y1="54" x2="132" y2="136" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00F2FE" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <linearGradient id="ua-indigo-grad" x1="68" y1="58" x2="112" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#A5B4FC" />
+    </linearGradient>
+    <filter id="subtle-glow" x="30" y="36" width="120" height="116" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Glow underlay -->
+  <path d="M48 54V98C48 122 66 136 90 136C114 136 132 122 132 98V54" stroke="#00F2FE" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.3" filter="url(#subtle-glow)" />
+  <!-- Outer U architectural bracket -->
+  <path d="M48 54V98C48 122 66 136 90 136C114 136 132 122 132 98V54" stroke="url(#ua-cyan-grad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Inner A neural apex & crossbar -->
+  <path d="M68 112L90 58L112 112" stroke="url(#ua-indigo-grad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M76 96H104" stroke="url(#ua-cyan-grad)" stroke-width="9" stroke-linecap="round" />
+  <!-- Apex focal node -->
+  <circle cx="90" cy="58" r="3.5" fill="#00F2FE" />
+</svg>

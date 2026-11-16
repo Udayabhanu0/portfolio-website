@@ -69,19 +69,34 @@ export function Header() {
           {/* Logo / Monogram */}
           <a
             href="#hero"
-            className="group flex items-center gap-3 text-sm font-semibold tracking-tight transition-opacity hover:opacity-90"
+            className="group flex items-center gap-3 transition-opacity hover:opacity-95"
             aria-label="Udayabhanu Aich — Home"
           >
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-indigo-600 font-mono text-xs font-bold text-black shadow-[0_0_15px_rgba(0,242,254,0.3)]">
-              UA
-              <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-[#090a0f] bg-emerald-400" />
+            <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#11131b] transition-all duration-300 group-hover:border-cyan-400/40 group-hover:shadow-[0_0_16px_rgba(0,242,254,0.2)]">
+              <svg width="20" height="20" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-300 group-hover:scale-105" aria-hidden="true">
+                <defs>
+                  <linearGradient id="header-ua-cyan" x1="48" y1="54" x2="132" y2="136" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#00F2FE" />
+                    <stop offset="100%" stopColor="#38BDF8" />
+                  </linearGradient>
+                  <linearGradient id="header-ua-indigo" x1="68" y1="58" x2="112" y2="112" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#FFFFFF" />
+                    <stop offset="100%" stopColor="#A5B4FC" />
+                  </linearGradient>
+                </defs>
+                <path d="M48 54V98C48 122 66 136 90 136C114 136 132 122 132 98V54" stroke="url(#header-ua-cyan)" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M68 112L90 58L112 112" stroke="url(#header-ua-indigo)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M76 96H104" stroke="url(#header-ua-cyan)" strokeWidth="12" strokeLinecap="round" />
+                <circle cx="90" cy="58" r="5" fill="#00F2FE" />
+              </svg>
             </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-white transition-colors group-hover:text-cyan-400">
+            <div className="flex items-center gap-2.5">
+              <span className="text-sm font-semibold tracking-tight text-white transition-colors group-hover:text-cyan-300">
                 Udayabhanu Aich
               </span>
-              <span className="hidden font-mono text-[10px] text-slate-400 sm:inline">
-                Software & AI Engineer
+              <span className="hidden items-center gap-1.5 rounded-full border border-white/5 bg-white/[0.03] px-2.5 py-0.5 font-mono text-[10px] text-slate-400 sm:inline-flex">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                AI Systems
               </span>
             </div>
           </a>
