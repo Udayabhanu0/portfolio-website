@@ -1,153 +1,210 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { ChevronDown, Download } from 'lucide-react'
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
+import { ArrowDown, ArrowUpRight, Cpu, Download, Sparkles, Terminal } from 'lucide-react'
+import type { MouseEvent } from 'react'
+
+const techStack = [
+  'Python',
+  'FastAPI',
+  'Django',
+  'Next.js 16',
+  'TypeScript',
+  'RAG Pipelines',
+  'Gemini 2.5 Flash',
+  'WebSockets',
+  'TensorFlow',
+  'AWS Bedrock',
+  'PostgreSQL',
+  'Redis Caching',
+  'Docker',
+  'Neon Serverless',
+]
 
 export function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  }
+  const mouseX = useMotionValue(50)
+  const mouseY = useMotionValue(50)
+  const spotlight = useMotionTemplate`radial-gradient(650px circle at ${mouseX}% ${mouseY}%, rgba(0, 242, 254, 0.08), rgba(99, 102, 241, 0.04) 40%, transparent 80%)`
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
-    },
-  }
-
-  const glowVariants = {
-    initial: { opacity: 0.5 },
-    animate: {
-      opacity: [0.5, 1, 0.5],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-      },
-    },
+  function handleMouseMove(e: MouseEvent<HTMLElement>) {
+    const rect = e.currentTarget.getBoundingClientRect()
+    mouseX.set(((e.clientX - rect.left) / rect.width) * 100)
+    mouseY.set(((e.clientY - rect.top) / rect.height) * 100)
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
-      {/* Background glow effect */}
+    <section
+      id="hero"
+      onMouseMove={handleMouseMove}
+      className="relative flex min-h-[96svh] flex-col justify-between overflow-hidden px-4 pb-0 pt-28 sm:px-6 sm:pt-36 lg:px-8"
+    >
+      {/* Dynamic Cursor Spotlight */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-[#00f0ff]/10 via-transparent to-transparent pointer-events-none"
-        variants={glowVariants}
-        initial="initial"
-        animate="animate"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ background: spotlight }}
+        aria-hidden
       />
 
-      {/* Grid background */}
-      <div className="absolute inset-0 grid grid-cols-12 gap-px opacity-5 pointer-events-none">
-        {Array.from({ length: 120 }).map((_, i) => (
-          <div key={i} className="border border-cyan-400" />
-        ))}
-      </div>
+      {/* Neural Background Mesh Grid */}
+      <div className="neural-grid pointer-events-none absolute inset-0 z-0 opacity-70" aria-hidden />
 
-      <motion.div
-        className="relative z-10 text-center max-w-4xl mx-auto"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Name/Title */}
-        <motion.div variants={itemVariants}>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="text-white">Udayabhanu</span>
+      {/* Ambient Top Glow Orbs */}
+      <div
+        className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-b from-cyan-500/15 via-indigo-500/10 to-transparent blur-[120px]"
+        aria-hidden
+      />
+
+      {/* Main Content Hero Container */}
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center py-6 sm:py-10">
+        {/* Availability & Stature Pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-6 flex flex-wrap items-center gap-3"
+        >
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 backdrop-blur-md">
+            <span className="pulse-emerald h-2 w-2 rounded-full bg-emerald-400" />
+            <span className="font-mono text-xs font-medium text-emerald-300">
+              Open to Software &amp; AI Roles
+            </span>
+          </div>
+
+          <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 backdrop-blur-md sm:inline-flex">
+            <Cpu className="h-3.5 w-3.5 text-cyan-400" />
+            <span className="font-mono text-xs text-slate-300">
+              AWS Certified AI Practitioner
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Hero Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="max-w-4xl"
+        >
+          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
+            Architecting{' '}
+            <span className="text-gradient-cyan">Intelligent Systems</span>
             <br />
-            <span className="glow-text-cyan">Aich</span>
+            from Models to Scale.
           </h1>
-        </motion.div>
 
-        {/* Subtitle */}
-        <motion.div variants={itemVariants}>
-          <p className="text-xl sm:text-2xl text-gray-300 mb-8">
-            Full-Stack Developer &amp; AI Enthusiast
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
+            Hi, I&apos;m <span className="font-semibold text-white">Udayabhanu Aich</span>. Full-Stack and AI Systems Engineer building real-time proctoring platforms, multi-turn voice assistants, and high-concurrency Python architectures that perform reliably under production load.
           </p>
         </motion.div>
 
-        {/* Description */}
-        <motion.div variants={itemVariants}>
-          <p className="text-base sm:text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Building intelligent applications that bridge the gap between design and functionality.
-            Specialized in modern web technologies, AI integration, and scalable architectures.
-          </p>
-        </motion.div>
-
-        {/* CTA Buttons */}
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center mb-16 flex-wrap">
+        {/* CTA Actions Cluster */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mt-8 flex flex-wrap items-center gap-3.5 sm:mt-10"
+        >
           <a
             href="#projects"
-            className="glass-hover px-6 sm:px-8 py-3 rounded-lg font-medium text-cyan-400 border border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-300 text-sm sm:text-base"
+            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-300 to-indigo-400 px-6 py-3.5 text-sm font-semibold text-black shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02] hover:shadow-cyan-400/30"
           >
-            View My Work
+            <span>Explore Featured Systems</span>
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
-          <a
-            href="#contact"
-            className="px-6 sm:px-8 py-3 rounded-lg font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 hover:bg-cyan-500/30 transition-all duration-300 text-sm sm:text-base"
-          >
-            Get In Touch
-          </a>
+
           <a
             href="/UDAYABHANU_AICH_RESUME.pdf"
             download="Udayabhanu_Aich_Resume.pdf"
-            className="px-6 sm:px-8 py-3 rounded-lg font-medium bg-blue-500/20 text-blue-300 border border-blue-400/30 hover:bg-blue-500/30 transition-all duration-300 text-sm sm:text-base flex items-center gap-2 justify-center"
+            className="glass-card-hover inline-flex items-center gap-2 rounded-xl px-5 py-3.5 text-sm font-medium text-slate-200"
           >
-            <Download className="w-4 h-4" />
-            Download Resume
+            <Download className="h-4 w-4 text-cyan-400" />
+            <span>Download Resume</span>
+          </a>
+
+          <a
+            href="#contact"
+            className="glass-card-hover inline-flex items-center gap-2 rounded-xl px-5 py-3.5 text-sm font-medium text-slate-200"
+          >
+            <span>Contact Me</span>
           </a>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Live Architecture Highlights Banner */}
         <motion.div
-          variants={itemVariants}
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex justify-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="mt-12 grid gap-4 rounded-2xl border border-white/10 bg-[#11131b]/80 p-4 backdrop-blur-xl sm:grid-cols-3 sm:p-5"
         >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-sm text-gray-500">Scroll to explore</span>
-            <ChevronDown className="w-6 h-6 text-cyan-400/50" />
+          <div className="flex items-start gap-3.5">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-cyan-400/20 bg-cyan-500/10 text-cyan-400">
+              <Terminal className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-mono text-xs uppercase tracking-wider text-slate-400">Flagship System</p>
+              <p className="text-sm font-semibold text-white">Code{'{'}X{'}'}Pro AI Assessment</p>
+              <p className="text-xs text-slate-400">TensorFlow proctoring &amp; WebSocket streams</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3.5 border-t border-white/5 pt-3 sm:border-l sm:border-t-0 sm:pl-4 sm:pt-0">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-indigo-400/20 bg-indigo-500/10 text-indigo-400">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-mono text-xs uppercase tracking-wider text-slate-400">AI Voice Assistant</p>
+              <p className="text-sm font-semibold text-white">Call2Order Engine</p>
+              <p className="text-xs text-slate-400">Twilio Voice + Gemini 2.5 Flash audio pipeline</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3.5 border-t border-white/5 pt-3 sm:border-l sm:border-t-0 sm:pl-4 sm:pt-0">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-emerald-400/20 bg-emerald-500/10 text-emerald-400">
+              <Cpu className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-mono text-xs uppercase tracking-wider text-slate-400">Production Core</p>
+              <p className="text-sm font-semibold text-white">Scalable Architecture</p>
+              <p className="text-xs text-slate-400">FastAPI, Django, PostgreSQL &amp; Docker</p>
+            </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Floating accent elements */}
-      <motion.div
-        className="absolute top-1/4 left-10 w-32 h-32 rounded-full border border-cyan-400/20 pointer-events-none"
-        animate={{
-          x: [0, 20, 0],
-          y: [0, 30, 0],
-          rotate: [0, 180, 360],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-      />
+      {/* Marquee Technology Ticker */}
+      <div className="relative -mx-4 mt-8 border-y border-white/10 bg-[#090a0f]/90 py-3.5 sm:-mx-6 lg:-mx-8">
+        <div className="marquee flex overflow-hidden" aria-hidden>
+          <div className="marquee-track flex shrink-0 items-center gap-8 pr-8">
+            {[...techStack, ...techStack].map((tech, i) => (
+              <span
+                key={i}
+                className="flex items-center gap-8 font-mono text-xs tracking-wider text-slate-400"
+              >
+                <span>{tech}</span>
+                <span className="text-cyan-400">✦</span>
+              </span>
+            ))}
+          </div>
+          <div className="marquee-track flex shrink-0 items-center gap-8 pr-8">
+            {[...techStack, ...techStack].map((tech, i) => (
+              <span
+                key={i}
+                className="flex items-center gap-8 font-mono text-xs tracking-wider text-slate-400"
+              >
+                <span>{tech}</span>
+                <span className="text-cyan-400">✦</span>
+              </span>
+            ))}
+          </div>
+        </div>
 
-      <motion.div
-        className="absolute bottom-1/4 right-10 w-40 h-40 rounded-full border border-blue-400/20 pointer-events-none"
-        animate={{
-          x: [0, -20, 0],
-          y: [0, -30, 0],
-          rotate: [360, 180, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-      />
+        <a
+          href="#about"
+          className="absolute -top-10 right-6 hidden items-center gap-1.5 font-mono text-xs text-slate-400 transition-colors hover:text-cyan-400 sm:flex"
+        >
+          Scroll to explore <ArrowDown className="h-3.5 w-3.5 animate-bounce" />
+        </a>
+      </div>
     </section>
   )
 }

@@ -15,3 +15,7 @@ node_modules
 .next/
 .DS_Store
 .vercel
+.env*
+tsconfig.tsbuildinfo
+awesome-design-skills/
+.claude/

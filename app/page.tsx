@@ -9,57 +9,31 @@ import { Contact } from '@/components/contact'
 import { Footer } from '@/components/footer'
 import { syncGitHubData } from '@/lib/github'
 
-export const revalidate = 86400 // Revalidate every 24 hours
+export const revalidate = 86400 // Revalidate every 24 hours (ISR)
 
 async function initializeData() {
   try {
-    // Try to sync GitHub data on first load
+    // Safely sync GitHub public data in background (ISR cached)
     await syncGitHubData()
   } catch (error) {
+    // Graceful fallback: do not fail page render if database or GitHub API limits occur
     console.error('[v0] Initial sync error:', error)
-    // Don't fail the page if sync fails
   }
 }
 
 export default async function Home() {
-  // Initialize GitHub data on each page load (ISR handles caching)
   await initializeData()
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-background text-foreground selection:bg-cyan-500/20 selection:text-white">
       <Header />
-      
-      {/* Add padding to account for fixed header */}
-      <div className="pt-16">
-        <section id="hero">
-          <Hero />
-        </section>
-
-        <section id="about">
-          <About />
-        </section>
-
-        <section id="skills">
-          <Skills />
-        </section>
-
-        <section id="projects">
-          <Projects />
-        </section>
-
-        <section id="experience">
-          <Experience />
-        </section>
-
-        <section id="certifications">
-          <Certifications />
-        </section>
-
-        <section id="contact">
-          <Contact />
-        </section>
-      </div>
-
+      <Hero />
+      <About />
+      <Skills />
+      <Projects />
+      <Experience />
+      <Certifications />
+      <Contact />
       <Footer />
     </main>
   )
