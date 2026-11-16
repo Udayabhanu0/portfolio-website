@@ -81,7 +81,7 @@ export function Header() {
                 Udayabhanu Aich
               </span>
               <span className="hidden font-mono text-[10px] text-slate-400 sm:inline">
-                AI & Systems Engineer
+                Software & AI Engineer
               </span>
             </div>
           </a>

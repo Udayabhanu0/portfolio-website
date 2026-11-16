@@ -19,8 +19,9 @@ export function SectionHeading({
       {tag && (
         <div className={`mb-3 flex items-center gap-2 ${align === 'center' ? 'justify-center' : ''}`}>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 font-mono text-[11px] font-medium tracking-wide text-cyan-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-            {tag}
+            <span className="text-cyan-500/70">$</span>
+            {tag.toLowerCase().replace(/&amp;/g, '&').replace(/ /g, '_')}
+            <span className="caret !h-3 !w-1.5" />
           </span>
         </div>
       )}

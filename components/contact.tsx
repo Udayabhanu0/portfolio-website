@@ -13,7 +13,7 @@ const socialLinks = [
     label: 'GitHub',
     handle: '@Manish10000',
     href: 'https://github.com/Manish10000',
-    description: 'Explore 24+ open-source repositories and contributions',
+    description: 'Open-source builds, AI projects and contributions',
   },
   {
     icon: Linkedin,
@@ -38,7 +38,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="relative border-t border-white/5 bg-[#0b0d13]/60 px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+    <section id="contact" className="relative overflow-hidden border-t border-white/5 bg-[#0b0d13]/60 px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
       {/* Background Neural Grid */}
       <div className="neural-grid-subtle pointer-events-none absolute inset-0 opacity-40" aria-hidden />
 

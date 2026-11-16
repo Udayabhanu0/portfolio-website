@@ -15,7 +15,7 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Udayabhanu Aich — Full-Stack & AI Systems Engineer',
+    default: 'Udayabhanu Aich — Software Engineer & AI Engineer',
     template: '%s | Udayabhanu Aich',
   },
   description:
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     'LLM',
     'WebSockets',
     'AWS Certified AI Practitioner',
+    'Claude Certified Architect',
+    'Anthropic Claude',
+    'MCP',
     'TensorFlow',
   ],
   authors: [{ name: 'Udayabhanu Aich' }],
@@ -40,13 +43,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
-    title: 'Udayabhanu Aich — Full-Stack & AI Systems Engineer',
+    title: 'Udayabhanu Aich — Software Engineer & AI Engineer',
     description: 'Scalable Python architectures, real-time proctoring systems, and multi-turn AI agents.',
     siteName: 'Udayabhanu Aich',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Udayabhanu Aich — Full-Stack & AI Systems Engineer',
+    title: 'Udayabhanu Aich — Software Engineer & AI Engineer',
     description: 'Scalable Python architectures, real-time proctoring systems, and multi-turn AI agents.',
   },
   icons: {
@@ -68,8 +71,8 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Udayabhanu Aich',
-  jobTitle: 'Full-Stack & AI Systems Engineer',
-  worksFor: { '@type': 'Organization', name: 'SmallDay IT Services' },
+  jobTitle: 'Software Engineer & AI Engineer',
+  worksFor: { '@type': 'Organization', name: 'SmallDay IT Services Pvt. Ltd.' },
   url: siteUrl,
   sameAs: ['https://github.com/Manish10000', 'https://linkedin.com/in/udayabhanuaich'],
 }

@@ -7,6 +7,7 @@ import { Experience } from '@/components/experience'
 import { Certifications } from '@/components/certifications'
 import { Contact } from '@/components/contact'
 import { Footer } from '@/components/footer'
+import { CursorGlow } from '@/components/cursor-glow'
 import { syncGitHubData } from '@/lib/github'
 
 export const revalidate = 86400 // Revalidate every 24 hours (ISR)
@@ -26,6 +27,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-cyan-500/20 selection:text-white">
+      <CursorGlow />
       <Header />
       <Hero />
       <About />

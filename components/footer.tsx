@@ -37,7 +37,7 @@ export function Footer() {
               <p className="text-base font-bold text-white">Udayabhanu Aich</p>
             </div>
             <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
-              Full-Stack &amp; AI Systems Engineer building scalable Python architectures, real-time WebSockets, and production machine learning applications.
+              Software &amp; AI engineer building scalable Python architectures, real-time WebSockets, and production machine learning applications.
             </p>
           </div>
 

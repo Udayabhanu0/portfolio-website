@@ -1,9 +1,11 @@
 'use client'
 
-import { ArrowUpRight, Bot, Code2, ExternalLink, Eye, GitFork, Github, Sparkles, Star, Terminal } from 'lucide-react'
+import { ArrowUpRight, Github, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Reveal } from './reveal'
 import { SectionHeading } from './section-heading'
+import { GlowCard } from './glow-card'
+import { builds, profile } from '@/lib/profile'
 
 interface Project {
   id: number
@@ -19,95 +21,7 @@ interface Project {
   sort_order: number
 }
 
-// Fallback high-impact projects for when DB is loading or empty
-const fallbackProjects: Project[] = [
-  {
-    id: 101,
-    repo_id: 1001,
-    repo_name: 'CodeXPro-Assessment-Engine',
-    description: 'Enterprise AI-driven online assessment platform with automated JD parsing, Gemini question generation, and real-time proctoring.',
-    url: 'https://github.com/Manish10000',
-    stars: 12,
-    forks: 4,
-    language: 'Python',
-    is_visible: true,
-    is_featured: true,
-    sort_order: 1,
-  },
-  {
-    id: 102,
-    repo_id: 1002,
-    repo_name: 'Call2Order-Voice-Assistant',
-    description: 'Real-time two-way AI phone assistant using Twilio Voice API, Gemini 2.5 Flash, WebSockets, and live audio transcription streaming.',
-    url: 'https://github.com/Manish10000',
-    stars: 8,
-    forks: 2,
-    language: 'Python',
-    is_visible: true,
-    is_featured: true,
-    sort_order: 2,
-  },
-  {
-    id: 103,
-    repo_id: 1003,
-    repo_name: 'RAG-FastAPI-Bedrock',
-    description: 'High-throughput Retrieval-Augmented Generation pipeline leveraging FAISS vector indices, AWS Bedrock embeddings, and async FastAPI endpoints.',
-    url: 'https://github.com/Manish10000',
-    stars: 15,
-    forks: 5,
-    language: 'Python',
-    is_visible: true,
-    is_featured: true,
-    sort_order: 3,
-  },
-  {
-    id: 104,
-    repo_id: 1004,
-    repo_name: 'ai-portfolio-platform',
-    description: 'Next.js 16 full-stack portfolio with Neon PostgreSQL auto-sync, admin management portal, and real-time GitHub stats integration.',
-    url: 'https://github.com/Udayabhanu0/portfolio-website',
-    stars: 7,
-    forks: 3,
-    language: 'TypeScript',
-    is_visible: true,
-    is_featured: false,
-    sort_order: 4,
-  },
-]
-
-const flagshipSystems = [
-  {
-    title: 'Code{X}Pro — AI Assessment & Proctoring Platform',
-    badge: 'Enterprise Production System',
-    role: 'Lead Architecture & Backend Development',
-    company: 'SmallDay IT Services',
-    description:
-      'Engineered an end-to-end assessment platform that converts arbitrary Job Descriptions into evaluated technical exams. Implemented JD parsing with Gemini API, question generation, and a real-time computer vision proctoring engine with face recognition and gaze anomaly detection.',
-    architecture: [
-      'JD Parsing & Competency Mapping (Gemini 2.5 Flash)',
-      'TensorFlow Vision Engine (Face & Gaze Deviation)',
-      'Real-Time WebSocket & SSE Proctoring Stream',
-      'Automated Code-Diff Evaluation (Python difflib)',
-      'Razorpay Payment Gateway & Webhook Handlers',
-    ],
-    tech: ['Python', 'FastAPI', 'Django', 'TensorFlow', 'PostgreSQL', 'WebSockets', 'Razorpay', 'Docker'],
-  },
-  {
-    title: 'Call2Order — AI Voice Phone Assistant',
-    badge: 'Real-Time Voice Architecture',
-    role: 'Lead Engineer',
-    company: 'SmallDay IT Services',
-    description:
-      'Architected a low-latency two-way voice assistant over telephone lines. Integrates Twilio Voice streams with Google Gemini 2.5 Flash for multi-turn conversational dialogue, live speech-to-text, context tracking, and real-time audio playback.',
-    architecture: [
-      'Twilio Media Streams over Bi-directional WebSockets',
-      'Gemini 2.5 Flash Audio Streaming & Intent Classification',
-      'Real-time Speech Synthesis & Low Latency Buffer (<250ms)',
-      'Stateful Multi-Turn Conversation Management',
-    ],
-    tech: ['Python', 'Twilio Voice', 'Gemini 2.5 Flash', 'WebSockets', 'TwiML', 'FastAPI'],
-  },
-]
+const flagships = builds.slice(0, 3)
 
 export function Projects() {
   const [projects, setProjects] = useState<Project[]>([])
@@ -116,181 +30,112 @@ export function Projects() {
   useEffect(() => {
     async function loadProjects() {
       try {
-        const response = await fetch('/api/admin/projects', {
-          next: { revalidate: 3600 },
-        })
+        const response = await fetch('/api/admin/projects')
         const data = await response.json()
-        if (Array.isArray(data) && data.length > 0) {
-          const visible = data
-            .filter((p: Project) => p.is_visible && p.description && p.description.trim().length > 0)
-            .sort((a: Project, b: Project) => {
-              if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1
-              return b.stars - a.stars
-            })
-          setProjects(visible.length > 0 ? visible : fallbackProjects)
-        } else {
-          setProjects(fallbackProjects)
+        if (Array.isArray(data)) {
+          setProjects(
+            data
+              .filter((p: Project) => p.is_visible && p.description && p.description.trim().length > 0)
+              .sort((a: Project, b: Project) =>
+                a.is_featured !== b.is_featured ? (a.is_featured ? -1 : 1) : b.stars - a.stars,
+              ),
+          )
         }
       } catch (error) {
-        console.error('[v0] Error loading projects:', error)
-        setProjects(fallbackProjects)
+        console.error('Error loading projects:', error)
       } finally {
         setLoading(false)
       }
     }
-
     loadProjects()
   }, [])
 
   return (
     <section id="projects" className="relative px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
-      {/* Background Ambient Glow */}
-      <div
-        className="pointer-events-none absolute right-0 top-1/3 h-[500px] w-[500px] rounded-full bg-indigo-500/5 blur-[140px]"
-        aria-hidden
-      />
-
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          tag="PRODUCTION ARCHITECTURE"
+          tag="PROJECTS"
           title={
             <>
-              Featured <span className="text-gradient-cyan">Systems &amp; Work</span>.
+              Featured <span className="text-gradient-cyan">systems</span>.
             </>
           }
-          subtitle="Enterprise platforms, computer vision proctoring pipelines, and open-source systems built for resilience."
+          subtitle="Production platforms and open-source builds — AI pipelines, real-time services and developer tools."
         />
 
-        {/* Part 1: Flagship Systems Deep-Dive */}
-        <div className="space-y-8 mb-16">
-          <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
-            <Sparkles className="h-4 w-4 text-cyan-400" />
-            <span className="uppercase tracking-wider">Enterprise Flagships</span>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
-            {flagshipSystems.map((sys, idx) => (
-              <Reveal key={sys.title} delay={0.1 * idx}>
-                <div className="glass-card-hover group flex h-full flex-col justify-between rounded-2xl p-6 sm:p-8">
-                  <div>
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3 py-1 font-mono text-xs text-cyan-300">
-                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-                        {sys.badge}
-                      </span>
-                      <span className="font-mono text-xs text-slate-400">
-                        {sys.company}
-                      </span>
-                    </div>
-
-                    <h3 className="mt-4 text-xl font-bold text-white group-hover:text-cyan-300 transition-colors sm:text-2xl">
-                      {sys.title}
-                    </h3>
-
-                    <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                      {sys.description}
-                    </p>
-
-                    <div className="mt-6 border-t border-white/5 pt-4">
-                      <p className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">
-                        Core Innovations
-                      </p>
-                      <ul className="space-y-1.5">
-                        {sys.architecture.map((item) => (
-                          <li key={item} className="flex items-start gap-2 text-xs text-slate-300">
-                            <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-cyan-400" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 border-t border-white/5 pt-4">
-                    <div className="flex flex-wrap gap-1.5">
-                      {sys.tech.map((t) => (
-                        <span key={t} className="tech-tag">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        {/* Part 2: GitHub Repository Ecosystem */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
-              <Github className="h-4 w-4 text-cyan-400" />
-              <span className="uppercase tracking-wider">GitHub Repositories &amp; Open Source</span>
-            </div>
-
-            <a
-              href="https://github.com/Manish10000"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-mono text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              <span>Browse full archive @Manish10000</span>
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-          </div>
-
-          {loading ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="h-48 animate-pulse rounded-xl border border-white/5 bg-[#11131b]/60" />
-              ))}
-            </div>
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, i) => (
-                <Reveal key={project.id || i} delay={Math.min(i * 0.04, 0.25)}>
+        <div className="grid gap-5 lg:grid-cols-3">
+          {flagships.map((b, i) => (
+            <Reveal key={b.id} delay={0.06 * i}>
+              <GlowCard className="flex h-full flex-col p-6">
+                <p className="font-mono text-[11px] text-cyan-300">{String(i + 1).padStart(2, '0')} / {b.period}</p>
+                <h3 className="mt-2 text-xl font-bold text-white">{b.name}</h3>
+                <p className="text-sm text-slate-400">{b.tagline}</p>
+                <p className="mt-4 text-sm leading-relaxed text-slate-300">{b.summary}</p>
+                <ul className="mt-5 flex flex-wrap gap-1.5">
+                  {b.tech.slice(0, 7).map((t) => (
+                    <li key={t} className="tech-tag">{t}</li>
+                  ))}
+                </ul>
+                {b.href && (
                   <a
-                    href={project.url}
+                    href={b.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="glass-card-hover group flex h-full flex-col justify-between rounded-xl p-5"
+                    className="mt-auto inline-flex items-center gap-1.5 pt-6 font-mono text-xs text-cyan-300 hover:text-cyan-200"
                   >
-                    <div>
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <Code2 className="h-4 w-4 text-cyan-400" />
-                          <h4 className="font-mono text-sm font-semibold text-white group-hover:text-cyan-300 transition-colors line-clamp-1">
-                            {project.repo_name}
-                          </h4>
-                        </div>
-                        <ArrowUpRight className="h-4 w-4 text-slate-500 transition-transform group-hover:text-cyan-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                      </div>
-
-                      <p className="mt-3 text-xs leading-relaxed text-slate-400 line-clamp-3">
-                        {project.description || 'Production repository with clean modular architecture and unit tests.'}
-                      </p>
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3 text-xs text-slate-400">
-                      <div className="flex items-center gap-1.5 font-mono">
-                        <span className="h-2 w-2 rounded-full bg-cyan-400" />
-                        <span>{project.language || 'Python'}</span>
-                      </div>
-
-                      <div className="flex items-center gap-3 font-mono text-[11px]">
-                        <span className="inline-flex items-center gap-1 hover:text-white transition-colors">
-                          <Star className="h-3 w-3 text-amber-400" /> {project.stars}
-                        </span>
-                        <span className="inline-flex items-center gap-1 hover:text-white transition-colors">
-                          <GitFork className="h-3 w-3 text-slate-400" /> {project.forks}
-                        </span>
-                      </div>
-                    </div>
+                    <Github className="h-4 w-4" /> source on GitHub <ArrowUpRight className="h-3.5 w-3.5" />
                   </a>
+                )}
+              </GlowCard>
+            </Reveal>
+          ))}
+        </div>
+
+        <div className="mt-16">
+          <Reveal>
+            <p className="code-comment mb-4 text-xs">{'// github repositories'}</p>
+          </Reveal>
+
+          {loading ? (
+            <div className="grid gap-3" role="status" aria-label="Loading repositories">
+              {[0, 1].map((i) => <div key={i} className="h-24 animate-pulse rounded-2xl bg-white/[0.03]" />)}
+            </div>
+          ) : projects.length === 0 ? (
+            <Reveal>
+              <GlowCard className="p-8 text-center">
+                <p className="text-lg font-semibold text-white">More on GitHub</p>
+                <p className="mt-1 text-sm text-slate-400">Browse every repository and open-source build.</p>
+                <a href={profile.github} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-400 px-5 py-3 text-sm font-semibold text-black">
+                  <Github className="h-4 w-4" /> github.com/Manish10000
+                </a>
+              </GlowCard>
+            </Reveal>
+          ) : (
+            <ul className="grid gap-4 md:grid-cols-2">
+              {projects.map((p, i) => (
+                <Reveal key={p.id} delay={Math.min(i, 5) * 0.05}>
+                  <GlowCard as="a" href={p.url} target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col p-5 sm:p-6">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="font-mono text-base font-semibold text-white">{p.repo_name}</h3>
+                      <ArrowUpRight className="h-5 w-5 shrink-0 text-slate-500 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan-300" />
+                    </div>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-400">{p.description}</p>
+                    <div className="mt-4 flex items-center gap-3 font-mono text-xs text-slate-400">
+                      {p.language && <span className="tech-tag">{p.language}</span>}
+                      <span className="inline-flex items-center gap-1"><Star className="h-3.5 w-3.5" aria-hidden /> {p.stars}<span className="sr-only"> stars</span></span>
+                    </div>
+                  </GlowCard>
                 </Reveal>
               ))}
-            </div>
+            </ul>
+          )}
+
+          {!loading && projects.length > 0 && (
+            <Reveal className="mt-8">
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="glass-card-hover inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-medium text-slate-200">
+                <Github className="h-4 w-4 text-cyan-400" /> View more on GitHub
+              </a>
+            </Reveal>
           )}
         </div>
       </div>
