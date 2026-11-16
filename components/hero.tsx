@@ -150,7 +150,9 @@ export function Hero() {
             </a>
             <a
               href="/UDAYABHANU_AICH_RESUME.pdf"
-              download="Udayabhanu_Aich_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="UDAYABHANU_AICH_Software_dev.pdf"
               className="glass-card-hover inline-flex items-center gap-2 rounded-xl px-5 py-3.5 text-sm font-medium text-slate-200"
             >
               <Download className="h-4 w-4 text-cyan-400" /> Resume
