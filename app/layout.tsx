@@ -68,7 +68,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    creator: '@udayabhanuaich',
     title: 'Udayabhanu Aich — Software Engineer & AI Engineer',
     description: 'Scalable Python architectures, real-time proctoring systems, and multi-turn AI agents.',
   },
