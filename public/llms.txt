@@ -1,0 +1,8 @@
+# Udayabhanu Aich — Portfolio
+
+> Udayabhanu Aich is a Full-Stack and AI Systems Engineer at SmallDay IT Services Pvt. Ltd. He builds scalable Python architectures, real-time proctoring systems and multi-turn voice agents.
+
+- [Portfolio](https://www.udayabhanuaich.org/): About, skills, projects, experience and certifications (AWS Certified AI Practitioner, Claude Certified Architect)
+- [Resume (PDF)](https://www.udayabhanuaich.org/UDAYABHANU_AICH_RESUME.pdf)
+- [GitHub](https://github.com/Manish10000)
+- [LinkedIn](https://linkedin.com/in/udayabhanuaich)

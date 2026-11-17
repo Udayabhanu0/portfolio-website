@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
+import { AnalyticsTracker } from '@/components/analytics-tracker'
 import './globals.css'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'swap' })
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'swap' })
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3C0LE2ME0H'
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -37,18 +41,34 @@ export const metadata: Metadata = {
     'MCP',
     'TensorFlow',
   ],
-  authors: [{ name: 'Udayabhanu Aich' }],
+  authors: [{ name: 'Udayabhanu Aich', url: siteUrl }],
   creator: 'Udayabhanu Aich',
+  publisher: 'Udayabhanu Aich',
+  applicationName: 'Udayabhanu Aich Portfolio',
+  category: 'technology',
+  alternates: { canonical: '/' },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: siteUrl,
+    url: '/',
     title: 'Udayabhanu Aich — Software Engineer & AI Engineer',
     description: 'Scalable Python architectures, real-time proctoring systems, and multi-turn AI agents.',
     siteName: 'Udayabhanu Aich',
   },
   twitter: {
     card: 'summary_large_image',
+    creator: '@udayabhanuaich',
     title: 'Udayabhanu Aich — Software Engineer & AI Engineer',
     description: 'Scalable Python architectures, real-time proctoring systems, and multi-turn AI agents.',
   },
@@ -69,12 +89,29 @@ export const viewport: Viewport = {
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Udayabhanu Aich',
-  jobTitle: 'Software Engineer & AI Engineer',
-  worksFor: { '@type': 'Organization', name: 'SmallDay IT Services Pvt. Ltd.' },
-  url: siteUrl,
-  sameAs: ['https://github.com/Manish10000', 'https://linkedin.com/in/udayabhanuaich'],
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      name: 'Udayabhanu Aich',
+      jobTitle: 'Software Engineer & AI Engineer',
+      description:
+        'Full-Stack and AI Systems Engineer building scalable Python architectures, real-time proctoring systems and multi-turn voice agents.',
+      url: siteUrl,
+      image: `${siteUrl}/opengraph-image`,
+      worksFor: { '@type': 'Organization', name: 'SmallDay IT Services Pvt. Ltd.' },
+      knowsAbout: ['Python', 'FastAPI', 'Django', 'Next.js', 'LLMs', 'RAG', 'WebSockets', 'AWS', 'TensorFlow'],
+      sameAs: ['https://github.com/Manish10000', 'https://linkedin.com/in/udayabhanuaich'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'Udayabhanu Aich — Portfolio',
+      inLanguage: 'en',
+      publisher: { '@id': `${siteUrl}/#person` },
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -85,18 +122,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark bg-background ${geist.variable} ${geistMono.variable}`}>
       <head>
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3C0LE2ME0H"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-3C0LE2ME0H');
-            `,
-          }}
-        ></script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="font-sans antialiased bg-background text-foreground selection:bg-cyan-500/20 selection:text-white">
@@ -109,6 +134,15 @@ export default function RootLayout({
         <div id="main">
           {children}
         </div>
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+        </Script>
+        <AnalyticsTracker />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
